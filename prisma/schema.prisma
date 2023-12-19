@@ -1,0 +1,63 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["views"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model RealEstateTransactions {
+  id                    Int       @id @default(autoincrement())
+  createdAt             DateTime? @default(now())
+  updatedAt             DateTime? @updatedAt
+  gush                  Int?
+  helka                 Int?
+  tatHelka              Int?
+  saleDate              DateTime?
+  declaredValueInShekel Int?
+  saleValueInShekel     Int?
+  propertyType          String?
+  soldPart              Int?
+  locality              String?
+  constructionYear      Int?
+  area                  String?
+  rooms                 Int?
+  blockId               Int?
+}
+
+model Project {
+  id          Int       @id @default(autoincrement())
+  createdAt   DateTime? @default(now())
+  updatedAt   DateTime? @updatedAt
+  projectName String
+  shchuna     String?
+  michrazId   Int?
+  Block       Block[]
+  michraz     Michraz?  @relation(fields: [michrazId], references: [id])
+}
+
+model Block {
+  id        Int       @id @default(autoincrement())
+  createdAt DateTime? @default(now())
+  updatedAt DateTime? @updatedAt
+  projectId Int
+  gush      Int?
+  helka     Int?
+  project   Project   @relation(fields: [projectId], references: [id])
+}
+
+model Michraz {
+  id             Int       @id @default(autoincrement())
+  createdAt      DateTime? @default(now())
+  updatedAt      DateTime? @updatedAt
+  MichrazID      Int
+  MitchamName    String
+  SchumZchiya    Int
+  ShemZoche      String
+  Kibolet        Int
+  HotzaotPituach Int
+  VaadaDate      DateTime
+  Project        Project[]
+}
