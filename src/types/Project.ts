@@ -1,6 +1,6 @@
 export type Project = {
-  saleValueInShekel: number
-	area: number
-	rooms: number
-	constructionYear: number
+  projectName: string
+	shchuna: string
+	VaadaDate: string
+	Kibolet: number
 };

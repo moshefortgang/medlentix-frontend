@@ -7,11 +7,11 @@ import {
   getCoreRowModel,
   useReactTable,
 } from '@tanstack/react-table'
-import { Project } from '@/types/Project'
+import { RealEstateTransaction } from '@/types/RealEstateTransaction'
 
 
 
-const columnHelper = createColumnHelper<Project>()
+const columnHelper = createColumnHelper<RealEstateTransaction>()
 
 const columns = [
   columnHelper.accessor('saleValueInShekel', {
@@ -36,7 +36,7 @@ const columns = [
 ]
 
 type TableProps<TData> = {
-  data: Project[];
+  data: RealEstateTransaction[];
 };
 
 export function ProjectTransactionsList ({ data}: TableProps<[]>): JSX.Element {
