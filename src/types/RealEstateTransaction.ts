@@ -3,4 +3,5 @@ export type RealEstateTransaction = {
 	area: number
 	rooms: number
 	constructionYear: number
+	pricePerSquareMeter: number
 };
