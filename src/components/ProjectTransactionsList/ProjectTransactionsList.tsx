@@ -16,7 +16,10 @@ const columnHelper = createColumnHelper<RealEstateTransaction>()
 
 const columns = [
   columnHelper.accessor('saleValueInShekel', {
-    cell: info => info.getValue(),
+    cell: info => {
+      const value = info.getValue()
+      return value.toLocaleString()
+    },
     header: () => <span>מחיר</span>,
   }),
   columnHelper.accessor(row => row.area, {
@@ -39,7 +42,7 @@ const columns = [
       const saleValue = info.row.original.saleValueInShekel;
       const area = info.row.original.area;
       const pricePerSquareMeter = Math.round(saleValue / area); // Round the value
-      return <span>{pricePerSquareMeter}</span>;
+      return pricePerSquareMeter.toLocaleString()
     },
     // eslint-disable-next-line react/no-unescaped-entities
     header: () => <span>מחיר למ"ר</span>,
