@@ -20,11 +20,13 @@ model RealEstateTransactions {
   saleValueInShekel     Int?
   propertyType          String?
   soldPart              Int?
-  locality              String?
   constructionYear      Int?
   area                  String?
   rooms                 Int?
   blockId               Int?
+  locality              Int?
+
+  @@unique([gush, helka, tatHelka, saleDate, declaredValueInShekel, area, rooms])
 }
 
 model Project {
@@ -60,4 +62,17 @@ model Michraz {
   HotzaotPituach Int
   VaadaDate      DateTime
   Project        Project[]
+}
+
+model Cities {
+  id                    Int     @id @default(autoincrement())
+  settlementCode        Int
+  settlementName        String
+  settlementNameEnglish String
+  districtCode          Int
+  districtName          String
+  ministryDistrictCode  Int
+  ministryDistrict      String
+  regionalCouncilCode   Int
+  regionalCouncilName   String?
 }
