@@ -1,6 +1,5 @@
 import { RealEstateTransaction } from "@/types/RealEstateTransaction";
 import { Prisma, PrismaClient } from "@prisma/client";
-import { Sql } from "@prisma/client/runtime/library";
 
 const prisma = new PrismaClient();
 
@@ -20,8 +19,6 @@ export default async function getRealEstateTransaction(
 
 function buildQuery(id: any, isCityPage: boolean): string {
   if (isCityPage) {
-		//			LEFT JOIN "Cities" AS c ON c."settlementCode" = r.locality
-
     return `
       SELECT r.*, r.gush, r.helka
       FROM public."RealEstateTransactions" AS r

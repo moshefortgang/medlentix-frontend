@@ -8,13 +8,14 @@ import {
   useReactTable,
 } from '@tanstack/react-table'
 import { RealEstateTransaction } from '@/types/RealEstateTransaction'
-import { log } from 'console'
-
-
 
 const columnHelper = createColumnHelper<RealEstateTransaction>()
 
 const columns = [
+	columnHelper.accessor('saleDate', {
+    cell: info => info.getValue().toLocaleDateString(),
+    header: () => <span>תאריך</span>,
+  }),
   columnHelper.accessor('saleValueInShekel', {
     cell: info => {
       const value = info.getValue()

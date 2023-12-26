@@ -16,7 +16,9 @@ const Project = async ({ params }: { params: { cid: string } }) => {
         <h1 className="text-4xl m-auto">מדלנטיקס</h1>
       </div>
       <div className="container mx-auto">
-				<ProjectComponent data={{project, soldApartmentsCount}} />
+				<div>
+				סה&quot;כ {soldApartmentsCount} עסקאות מדווחות 
+				</div>
         <ProjectTransactionsList data={realEstateTransaction} />
       </div>
     </div>
