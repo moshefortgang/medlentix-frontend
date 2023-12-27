@@ -21,13 +21,13 @@ function buildQuery(id: any, isCityPage: boolean): string {
   if (isCityPage) {
     return `
       SELECT r.*, r.gush, r.helka
-      FROM public."RealEstateTransactions" AS r
+      FROM public."RealEstateTransactionsNadlanGov" AS r
       WHERE r.locality = ${id}
     `;
   } else {
     return `
       SELECT m."Kibolet", r.*, b.gush, b.helka
-      FROM public."RealEstateTransactions" AS r
+      FROM public."RealEstateTransactionsNadlanGov" AS r
       LEFT JOIN "Block" AS b ON r.gush = b.gush AND r.helka = b.helka
       LEFT JOIN "Project" AS p ON b."projectId" = p.id
       LEFT JOIN "Michraz" AS m ON p."michrazId" = m.id
