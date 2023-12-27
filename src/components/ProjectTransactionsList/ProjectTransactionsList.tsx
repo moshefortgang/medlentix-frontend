@@ -7,52 +7,59 @@ import {
   getCoreRowModel,
   useReactTable,
 } from '@tanstack/react-table'
-import { RealEstateTransaction } from '@/types/RealEstateTransaction'
+import { RealEstateTransactionsNadlanGov } from '@/types/RealEstateTransaction'
 
-const columnHelper = createColumnHelper<RealEstateTransaction>()
+const columnHelper = createColumnHelper<RealEstateTransactionsNadlanGov>()
 
 const columns = [
-	columnHelper.accessor('saleDate', {
+	columnHelper.accessor('dealDateTime', {
     cell: info => info.getValue().toLocaleDateString(),
     header: () => <span>תאריך</span>,
   }),
-  columnHelper.accessor('saleValueInShekel', {
+  columnHelper.accessor('dealAmount', {
     cell: info => {
       const value = info.getValue()
-      return value.toLocaleString()
+      return value
     },
     header: () => <span>מחיר</span>,
   }),
-  columnHelper.accessor(row => row.area, {
-    id: 'area',
+  columnHelper.accessor(row => row.dealNature, {
+    id: 'dealNature',
     cell: info => <i>{info.getValue()}</i>,
     // eslint-disable-next-line react/no-unescaped-entities
     header: () => <span>מ"ר</span>,
   }),
-  columnHelper.accessor('rooms', {
+  columnHelper.accessor('assetRoomNum', {
     cell: info => info.getValue(),
     header: () => <span>חדרים</span>,
   }),
-  columnHelper.accessor('constructionYear', {
+  columnHelper.accessor('buildingYear', {
     cell: info => info.getValue(),
     header: () => <span>שנת בנייה</span>,
+  }),
+  columnHelper.accessor('floorNo', {
+    cell: info => info.getValue(),
+    header: () => <span>קומה</span>,
+  }),
+  columnHelper.accessor('displayAddress', {
+    cell: info => info.getValue(),
+    header: () => <span>כתובת</span>,
   }),
   columnHelper.accessor('pricePerSquareMeter', {
     id: 'pricePerSquareMeter',
     cell: info => {
-      const saleValue = info.row.original.saleValueInShekel;
-      const area = info.row.original.area;
-      const pricePerSquareMeter = Math.round(saleValue / area); // Round the value
-      return pricePerSquareMeter.toLocaleString()
+  const saleValue = info.row.original.dealAmount.toString().replace(/,/g, '');
+  const pricePerSquareMeter = Math.round(+saleValue / info.row.original.dealNature);
+  return pricePerSquareMeter.toLocaleString();
     },
     // eslint-disable-next-line react/no-unescaped-entities
     header: () => <span>מחיר למ"ר</span>,
   }),
-
 ]
 
+
 type TableProps<TData> = {
-  data: RealEstateTransaction[];
+  data: RealEstateTransactionsNadlanGov[];
 };
 
 export function ProjectTransactionsList({ data }: TableProps<[]>): JSX.Element {
@@ -64,8 +71,6 @@ export function ProjectTransactionsList({ data }: TableProps<[]>): JSX.Element {
 
   return (
     <div className="bg-gray-50 min-h-screen">
-      <nav>
-      </nav>
       <div className='block w-full overflow-x-auto'>
         <table className='items-center w-full bg-transparent border-collapse'>
           <thead>
@@ -89,7 +94,7 @@ export function ProjectTransactionsList({ data }: TableProps<[]>): JSX.Element {
           </thead>
           <tbody>
             {table.getRowModel().rows.map(row => (
-              <tr key={row.id}  className={Number(row.id) % 2 === 0 ? 'bg-gray-100' : 'bg-white'}>
+              <tr key={row.id} className={Number(row.id) % 2 === 0 ? 'bg-gray-100' : 'bg-white'}>
                 {row.getVisibleCells().map(cell => (
                   <td key={cell.id} className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                     <div className="py-2 px-4 border-gray-200">
@@ -102,7 +107,7 @@ export function ProjectTransactionsList({ data }: TableProps<[]>): JSX.Element {
           </tbody>
           <tfoot>
             {table.getFooterGroups().map(footerGroup => (
-              <tr key={footerGroup.id} className={Number(footerGroup.id) % 2 === 0 ? 'bg-gray-100' : 'bg-white'}>  
+              <tr key={footerGroup.id} className={Number(footerGroup.id) % 2 === 0 ? 'bg-gray-100' : 'bg-white'}>
                 {footerGroup.headers.map(header => (
                   <th key={header.id}>
                     {header.isPlaceholder
@@ -121,5 +126,5 @@ export function ProjectTransactionsList({ data }: TableProps<[]>): JSX.Element {
         <div className="h-4" />
       </div>
     </div>
-  )
+  )  
 }
