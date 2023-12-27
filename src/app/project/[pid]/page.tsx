@@ -17,7 +17,7 @@ const Project = async ({ params }: { params: { pid: string } }) => {
       </div>
       <div className="container mx-auto">
 				<ProjectComponent data={{project, soldApartmentsCount}} />
-        <ProjectTransactionsList data={realEstateTransaction} />
+        <ProjectTransactionsList data={realEstateTransaction} />     
       </div>
     </div>
   );
