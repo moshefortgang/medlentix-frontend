@@ -8,6 +8,7 @@ import {
   useReactTable,
 } from '@tanstack/react-table'
 import { RealEstateTransactionsNadlanGov } from '@/types/RealEstateTransaction'
+import multiFloors from '@/utils/getReplaceFloorFromStringToNumber'
 
 const columnHelper = createColumnHelper<RealEstateTransactionsNadlanGov>()
 
@@ -38,7 +39,11 @@ const columns = [
     header: () => <span>שנת בנייה</span>,
   }),
   columnHelper.accessor('floorNo', {
-    cell: info => info.getValue(),
+    cell: info => {
+    const floorNo = info.getValue()
+    const floor = multiFloors(floorNo)
+    return floor
+    },
     header: () => <span>קומה</span>,
   }),
   columnHelper.accessor('displayAddress', {
