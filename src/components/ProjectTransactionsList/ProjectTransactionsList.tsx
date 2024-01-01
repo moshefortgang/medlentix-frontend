@@ -76,19 +76,20 @@ export function ProjectTransactionsList({ data }: TableProps<[]>): JSX.Element {
 
   return (
     <div className="bg-gray-50 min-h-screen">
-      <nav>{/* Navigation content goes here */}</nav>
-      <div className='Properties scroll-px-0 p-5'>
-        <table className="w-full text-center"> {/* Added text-center class */}
+      <div className='block w-full overflow-x-auto'>
+        <table className='items-center w-full bg-transparent border-collapse'>
           <thead>
             {table.getHeaderGroups().map(headerGroup => (
               <tr key={headerGroup.id}>
                 {headerGroup.headers.map(header => (
-                  <th key={header.id} className="bg-cyan-300">
+                  <th key={header.id} className="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-bold text-left bg-blueGray-100 text-blueGray-500 border-blueGray-200">
                     {header.isPlaceholder
                       ? null
                       : (
+                        <div style={{textAlign: "center"}}>
                         <div className="text-lg font-bold text-gray-800">
                           {flexRender(header.column.columnDef.header, header.getContext())}
+                        </div>
                         </div>
                       )}
                   </th>
@@ -100,7 +101,7 @@ export function ProjectTransactionsList({ data }: TableProps<[]>): JSX.Element {
             {table.getRowModel().rows.map(row => (
               <tr key={row.id} className={Number(row.id) % 2 === 0 ? 'bg-gray-100' : 'bg-white'}>
                 {row.getVisibleCells().map(cell => (
-                  <td key={cell.id} className="py-4 px-6">
+                  <td key={cell.id} className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                     <div className="py-2 px-4 border-gray-200">
                       {flexRender(cell.column.columnDef.cell, cell.getContext())}
                     </div>
