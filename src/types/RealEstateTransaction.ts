@@ -1,6 +1,6 @@
 export type RealEstateTransaction = {
 	saleDate: any
-    saleValueInShekel: number
+  saleValueInShekel: number
 	area: number
 	rooms: number
 	constructionYear: number
@@ -8,7 +8,7 @@ export type RealEstateTransaction = {
 };
 export type RealEstateTransactionsNadlanGov = {
 	dealDateTime: any
-    dealAmount: number
+  dealAmount: number
 	dealNature: number
 	assetRoomNum: string
 	buildingYear: string
