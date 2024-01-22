@@ -20,15 +20,18 @@ const columns = [
       );
     },
     header: () => <span>שם הפרויקט</span>,
-    size: 80,
   }),
 
   columnHelper.accessor("shchuna", {
-    cell: (info) => {
-      const value = info.getValue();
-      return value;
-    },
+
     header: () => <span>שכונה</span>,
+  }),
+  columnHelper.accessor("michraz.VaadaDate", {
+    cell: (info) => {
+      const value = new Date(info.getValue());
+      return (value.toLocaleDateString());
+    },
+    header: () => <span>ת. זכייה</span>,
   }),
 ];
 
@@ -40,10 +43,7 @@ export function ProjectsListComponent({ data }: TableProps<[]>): JSX.Element {
   const table = useReactTable({
     data,
     columns,
-    getCoreRowModel: getCoreRowModel(),
-    defaultColumn: {
-      size: 80,
-    },
+    getCoreRowModel: getCoreRowModel()
   });
 
   return (

@@ -2,16 +2,17 @@ import React from "react";
 import { ProjectTransactionsList } from "@/components/ProjectTransactionsList/ProjectTransactionsList";
 import getRealEstateTransaction from "@/utils/getRealEstateTransactions";
 import getProject from "@/utils/getProjects";
-import { RealEstateTransaction } from "@/types/RealEstateTransaction";
 import { Project } from "@/types/Project";
-import { Chart2 } from "@/components/Chart/ChartComponent";
+import { TransactionChart } from "@/components/Chart/ChartComponent";
 import { getAvgPricePerSquareMeter } from "@/utils/getAvgPricePerSquareMeter";
+import { ProjectsListComponent } from "@/components/ProjectsList/ProjectsListComponent";
+import { TransactionStatsSummary } from "@/types/TransactionStats";
 
 const Project = async ({ params }: { params: { cid: string } }) => {
   const realEstateTransaction: any[] = await getRealEstateTransaction(+params.cid, true);
-  const project: Project[] = await getProject(+params.cid);
-  const soldApartmentsCount: number = realEstateTransaction.length;
-	const avgPricePerSquareMeter: any[] = await getAvgPricePerSquareMeter();
+  const projects: Project[] = await getProject(+params.cid, true);
+  const avgPricePerSquareMeter: TransactionStatsSummary = await getAvgPricePerSquareMeter(+params.cid);
+  const soldApartmentsCount: number = avgPricePerSquareMeter.totalCountSum;
 
   return (
     <div className="flex flex-col h-screen">
@@ -33,15 +34,25 @@ const Project = async ({ params }: { params: { cid: string } }) => {
               <div className="flex bg-white flex-col items-stretch opacity-100 relative mt-4 overflow-y-auto overflow-x-hidden h-auto z-40 flex-1 rounded w-full">
                 <div className="md:flex-col md:min-w-full flex flex-col list-none">
                   <hr className="my-4 md:min-w-full" />
-                  <h6 className="md:min-w-full text-blueGray-500 text-xs uppercase font-bold block pt-1 pb-4 no-underline">Section 3</h6>
-                  <a href="#" className="text-xs uppercase py-3 font-bold block text-blueGray-800 hover:text-blueGray-500"><i className="fas fa-newspaper mr-2 text-sm text-blueGray-400"></i>Page 1 for Section 3</a>
-                  <a href="#" className="text-xs uppercase py-3 font-bold block text-blueGray-800 hover:text-blueGray-500"><i className="fas fa-user-circle mr-2 text-sm text-blueGray-400"></i>Page 2 for Section 3</a>
-                  <a href="#" className="text-xs uppercase py-3 font-bold block text-blueGray-800 hover:text-blueGray-500"><i className="fas fa-paint-brush mr-2 text-sm text-blueGray-400"></i>Page 3 for Section 3</a>
+                  <h6 className="md:min-w-full text-blueGray-500 text-xs uppercase font-bold block pt-1 pb-4 no-underline">
+                    Section 3
+                  </h6>
+                  <a
+                    href="#"
+                    className="text-xs uppercase py-3 font-bold block text-blueGray-800 hover:text-blueGray-500"
+                  >
+                    <i className="fas fa-newspaper mr-2 text-sm text-blueGray-400"></i>Page 1 for Section 3
+                  </a>
                   <hr className="my-4 md:min-w-full" />
-                  <h6 className="md:min-w-full text-blueGray-500 text-xs uppercase font-bold block pt-1 pb-4 no-underline">Section 4</h6>
-                  <a href="#" className="text-xs uppercase py-3 font-bold block text-blueGray-800 hover:text-blueGray-500"><i className="fab fa-angular mr-2 text-sm text-blueGray-400"></i>Page 1 for Section 4</a>
-                  <a href="#" className="text-xs uppercase py-3 font-bold block text-blueGray-800 hover:text-blueGray-500"><i className="fab fa-react mr-2 text-sm text-blueGray-400"></i>Page 2 for Section 4</a>
-                  <a href="#" className="text-xs uppercase py-3 font-bold block text-blueGray-800 hover:text-blueGray-500"><i className="fab fa-vuejs mr-2 text-sm text-blueGray-400"></i>Page 3 for Section 4</a>
+                  <h6 className="md:min-w-full text-blueGray-500 text-xs uppercase font-bold block pt-1 pb-4 no-underline">
+                    Section 4
+                  </h6>
+                  <a
+                    href="#"
+                    className="text-xs uppercase py-3 font-bold block text-blueGray-800 hover:text-blueGray-500"
+                  >
+                    <i className="fab fa-angular mr-2 text-sm text-blueGray-400"></i>Page 1 for Section 4
+                  </a>
                 </div>
               </div>
             </div>
@@ -49,10 +60,7 @@ const Project = async ({ params }: { params: { cid: string } }) => {
           <div className="relative md:mr-64 bg-blueGray-100 w-full">
             <div className="px-4 md:px-6 mx-auto w-full">
               <div className="flex flex-wrap">
-                <div className="w-full xl:w-6/12 px-4 overflow-y-auto h-screen">
-                  <ProjectTransactionsList data={realEstateTransaction} />
-                </div>
-                <div className="w-full xl:w-6/12 px-4">
+                <div className="w-full px-4">
                   <div className="relative flex flex-col min-w-0 break-words w-full mb-8 shadow-lg rounded-lg bg-white">
                     <div className="rounded-t mb-0 px-4 py-3 bg-transparent">
                       <div className="flex flex-wrap items-center">
@@ -63,11 +71,17 @@ const Project = async ({ params }: { params: { cid: string } }) => {
                       </div>
                     </div>
                     <div className="p-4 flex-auto">
-                      <div className="relative h-350-px">
-                        <Chart2 avgPricePerSquareMeter={avgPricePerSquareMeter} />
+                      <div className="relative h-full">
+                        <TransactionChart avgPricePerSquareMeter={avgPricePerSquareMeter.data} />
                       </div>
                     </div>
                   </div>
+                </div>
+                <div className="w-full xl:w-6/12 px-4 overflow-y-auto">
+                  <ProjectTransactionsList data={realEstateTransaction} />
+                </div>
+                <div className=" xl:w-6/12 px-4 overflow-y-auto">
+                  <ProjectsListComponent data={projects} />
                 </div>
               </div>
             </div>

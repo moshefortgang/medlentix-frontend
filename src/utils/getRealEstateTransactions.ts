@@ -23,6 +23,7 @@ function buildQuery(id: any, isCityPage: boolean): string {
       SELECT r.*, r.gush, r.helka
       FROM public."RealEstateTransactionsNadlanGov" AS r
       WHERE r.locality = ${id}
+			LIMIT 100
     `;
   } else {
     return `
@@ -32,6 +33,7 @@ function buildQuery(id: any, isCityPage: boolean): string {
       LEFT JOIN "Project" AS p ON b."projectId" = p.id
       LEFT JOIN "Michraz" AS m ON p."michrazId" = m.id
       WHERE p.id = ${id}
+			LIMIT 100
     `;
   }
 }
