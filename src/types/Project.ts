@@ -19,4 +19,6 @@ export type Project = {
 	michrazId: any
 	city: any
 	michraz?: Michraz | null
+	VaadaDate: any | null
+	totalCount?: number
 };

@@ -26,12 +26,19 @@ const columns = [
 
     header: () => <span>שכונה</span>,
   }),
-  columnHelper.accessor("michraz.VaadaDate", {
+  columnHelper.accessor("VaadaDate", {
     cell: (info) => {
       const value = new Date(info.getValue());
       return (value.toLocaleDateString());
     },
     header: () => <span>ת. זכייה</span>,
+  }),
+  columnHelper.accessor("totalCount", {
+    cell: (info) => {
+      return info.getValue() + " מתוך " + info.row.original.Kibolet;
+    },
+    // eslint-disable-next-line react/no-unescaped-entities
+    header: () => <span>סה"כ עסקאות</span>,
   }),
 ];
 
@@ -78,7 +85,7 @@ export function ProjectsListComponent({ data }: TableProps<[]>): JSX.Element {
                   key={cell.id}
                   className="border-t-0 p-2 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap"
                 >
-                  <div className="py-2 px-4 border-gray-200">
+                  <div className="p-2 pl-0 border-gray-200 truncate">
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </div>
                 </td>
